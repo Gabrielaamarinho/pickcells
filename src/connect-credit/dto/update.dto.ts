@@ -1,13 +1,17 @@
 import {IsOptional, IsNumber, IsBoolean } from 'class-validator';
+import { Course } from 'src/course/course.entity';
+import { Subject } from 'src/subject/subject.entity';
+import { JoinColumn, ManyToMany } from 'typeorm';
 
 export class UpdateConnectCreditDto {
 
-	@IsNumber()
+
 	@IsOptional()
+	@IsNumber()
 	id_course?: number;
 
-	@IsNumber()
 	@IsOptional()
+	@IsNumber()
 	id_subject?: number;
 
 	@IsNumber()

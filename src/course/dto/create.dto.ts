@@ -1,5 +1,5 @@
 import { IsEnum, IsNotEmpty, IsString, MaxLength } from "class-validator"
-import { Type } from '../courses.enum';
+import { Type } from '../cursos.enum';
 
 export class CreateCourseDto {
 

@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConnectCredit } from 'src/connect-credit/conect-credit.entity';
+import { ConnectCredit } from 'src/connect-credit/connect-credit.entity';
 import { Subject } from 'src/subject/subject.entity';
 import { CourseController } from './course.controller';
 import { Course } from './course.entity';

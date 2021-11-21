@@ -1,6 +1,6 @@
 import { Course } from 'src/course/course.entity';
 import { Subject } from 'src/subject/subject.entity';
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, CreateDateColumn, UpdateDateColumn, JoinColumn, JoinTable } from 'typeorm';
 
 @Entity()
 export class ConnectCredit {
@@ -9,11 +9,11 @@ export class ConnectCredit {
 	id: number;
 
 	@Column()
-	@OneToOne(type => Course, course => course.id)
+	@ManyToMany(type => Course, (course: Course) => course.id)
 	id_course: number;
 
 	@Column()
-	@OneToOne(type => Subject, subject => subject.id)
+	@ManyToMany(type => Subject, (subject: Subject) => subject.id)
 	id_subject: number;
 
 	@Column()

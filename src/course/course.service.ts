@@ -1,12 +1,12 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { createQueryBuilder, Repository } from 'typeorm';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Course } from './course.entity';
 import { CreateCourseDto } from './dto/create.dto';
 import { UpdateCourseDto } from './dto/update.dto';
-import { ConnectCredit } from 'src/connect-credit/conect-credit.entity';
-import { CreateConnectCreditDto } from 'src/connect-credit/dto/create.dto';
 import { Subject } from 'src/subject/subject.entity';
+import { ConnectCredit } from 'src/connect-credit/connect-credit.entity';
+import { CreateConnectCreditDto } from 'src/connect-credit/dto/create.dto';
 import { UpdateConnectCreditDto } from 'src/connect-credit/dto/update.dto';
 
 @Injectable()
@@ -59,24 +59,32 @@ export class CourseService {
     return this.subjectRepository.findOne( id_subject );
   }
 
-  async updateCourse(id: number, updateCourseDto: UpdateCourseDto) {
+  async tableRelation(id_course: number): Promise<any>{
+    return await this.connectCreditRepository
+    .createQueryBuilder('course')
+    .innerJoinAndMapOne('course.connectCredit', ConnectCredit, 'connectCredit', 'course.id = connectCredit.id_course')
+    .where('connectCredit.id_course = :id_course', {id_course})
+    .getMany();
+  }
+
+  async updateCourse(id: Course, updateCourseDto: UpdateCourseDto) {
     const curso = updateCourseDto;
 
     this.courseRepository.update(id, curso);
     return this.courseRepository.findOne(id); //Return Object
   }
 
-  async updateConectCredit(id: number, updateConnecCreditDto: UpdateConnectCreditDto) {
-    const connectCredit = updateConnecCreditDto;
+  async updateConectCredit(id: Course, updateConnectCreditDto: UpdateConnectCreditDto) {
+    const connectCredit = updateConnectCreditDto;
       
     if(connectCredit.id_course) {
-      connectCredit.id_course = updateConnecCreditDto.id_course
+      connectCredit.id_course = updateConnectCreditDto.id_course
     }
     if(connectCredit.id_subject) {
-      connectCredit.id_subject = updateConnecCreditDto.id_subject
+      connectCredit.id_subject = updateConnectCreditDto.id_subject
     }
     if(connectCredit.quant_credits) {
-      connectCredit.quant_credits = updateConnecCreditDto.quant_credits
+      connectCredit.quant_credits = updateConnectCreditDto.quant_credits
     }
       
     this.connectCreditRepository.update(id, connectCredit);

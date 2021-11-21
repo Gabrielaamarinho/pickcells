@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Param, Post, Put, Delete } from '@nestjs/common';
-import { ConnectCredit } from 'src/connect-credit/conect-credit.entity';
+import { ConnectCredit } from 'src/connect-credit/connect-credit.entity';
 import { CreateConnectCreditDto } from 'src/connect-credit/dto/create.dto';
 import { UpdateConnectCreditDto } from 'src/connect-credit/dto/update.dto';
 import { Course } from './course.entity';
@@ -31,14 +31,18 @@ export class CourseController {
     return await this.courseService.findOne(id);
   }
 
-  
+  @Get('/relation/:id')
+  async findtodos(@Param('id') id: number): Promise<ConnectCredit[]> {
+    return await this.courseService.tableRelation(id);
+  }
+
   @Put('/edit/:id')
-  async updateCourse(@Param('id') id: number, @Body() updateCourseDto: UpdateCourseDto) {
+  async updateCourse(@Param('id') id: any, @Body() updateCourseDto: UpdateCourseDto) {
     return await this.courseService.updateCourse(id, updateCourseDto);
   }
 
   @Put('/edit/connectCredit/:id')
-  async updateConnectCredit(@Param('id') id: number, @Body() updateConnectCredit: UpdateConnectCreditDto) {
+  async updateConnectCredit(@Param('id') id: any, @Body() updateConnectCredit: UpdateConnectCreditDto) {
     return await this.courseService.updateConectCredit(id, updateConnectCredit);
   }
 
