@@ -1,6 +1,6 @@
 import {IsBoolean, IsNotEmpty, IsNumber } from "class-validator";
 
-export class CreateConectCreditDto {
+export class CreateConnectCreditDto {
 	@IsNumber()
 	@IsNotEmpty()
 	id_course: number;

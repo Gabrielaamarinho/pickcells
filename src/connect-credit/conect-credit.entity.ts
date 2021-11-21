@@ -3,7 +3,7 @@ import { Subject } from 'src/subject/subject.entity';
 import { Entity, PrimaryGeneratedColumn, Column, OneToOne, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity()
-export class ConectCredit {
+export class ConnectCredit {
 
 	@PrimaryGeneratedColumn()
 	id: number;

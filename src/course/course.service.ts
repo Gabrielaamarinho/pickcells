@@ -4,18 +4,18 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Course } from './course.entity';
 import { CreateCourseDto } from './dto/create.dto';
 import { UpdateCourseDto } from './dto/update.dto';
-import { ConectCredit } from 'src/conect-credit/conect-credit.entity';
-import { CreateConectCreditDto } from 'src/conect-credit/dto/create.dto';
+import { ConnectCredit } from 'src/connect-credit/conect-credit.entity';
+import { CreateConnectCreditDto } from 'src/connect-credit/dto/create.dto';
 import { Subject } from 'src/subject/subject.entity';
-import { UpdateConectCreditDto } from 'src/conect-credit/dto/update.dto';
+import { UpdateConnectCreditDto } from 'src/connect-credit/dto/update.dto';
 
 @Injectable()
 export class CourseService {
 	constructor(
 		@InjectRepository(Course)
 		private courseRepository: Repository<Course>,
-    @InjectRepository(ConectCredit)
-    private conectCreditRepository: Repository<ConectCredit>,
+    @InjectRepository(ConnectCredit)
+    private connectCreditRepository: Repository<ConnectCredit>,
     @InjectRepository(Subject)
     private subjectRepository: Repository<Subject>,
 	){}
@@ -29,18 +29,18 @@ export class CourseService {
     return await this.courseRepository.save(curso);
   }
 
-  async createConectCredit(createConectCreditDto: CreateConectCreditDto): Promise<ConectCredit>{
-		if(!await this.findIdCourse(createConectCreditDto.id_course)){
+  async createConnectCredit(createConnectCreditDto: CreateConnectCreditDto): Promise<ConnectCredit>{
+		if(!await this.findIdCourse(createConnectCreditDto.id_course)){
 			throw new HttpException("ID do curso não encontrado", HttpStatus.BAD_REQUEST);
 		}
-		if(!await this.findIdSubject(createConectCreditDto.id_subject)){
+		if(!await this.findIdSubject(createConnectCreditDto.id_subject)){
 			throw new HttpException("ID da disciplina não encontrado", HttpStatus.BAD_REQUEST);
 		}
-		const conectCredit = this.conectCreditRepository.create(createConectCreditDto);
-		conectCredit.id_course = createConectCreditDto.id_course;
-		conectCredit.id_subject = createConectCreditDto.id_subject;
+		const connectCredit = this.connectCreditRepository.create(createConnectCreditDto);
+		connectCredit.id_course = createConnectCreditDto.id_course;
+		connectCredit.id_subject = createConnectCreditDto.id_subject;
 
-		return await this.conectCreditRepository.save(conectCredit);
+		return await this.connectCreditRepository.save(connectCredit);
   }
 
   findAll(): Promise<Course[]>{
@@ -66,21 +66,21 @@ export class CourseService {
     return this.courseRepository.findOne(id); //Return Object
   }
 
-  async updateConectCredit(id: number, updateConecCreditDto: UpdateConectCreditDto) {
-    const conectCredit = updateConecCreditDto;
+  async updateConectCredit(id: number, updateConnecCreditDto: UpdateConnectCreditDto) {
+    const connectCredit = updateConnecCreditDto;
       
-    if(conectCredit.id_course) {
-      conectCredit.id_course = updateConecCreditDto.id_course
+    if(connectCredit.id_course) {
+      connectCredit.id_course = updateConnecCreditDto.id_course
     }
-    if(conectCredit.id_subject) {
-      conectCredit.id_subject = updateConecCreditDto.id_subject
+    if(connectCredit.id_subject) {
+      connectCredit.id_subject = updateConnecCreditDto.id_subject
     }
-    if(conectCredit.quant_credits) {
-      conectCredit.quant_credits = updateConecCreditDto.quant_credits
+    if(connectCredit.quant_credits) {
+      connectCredit.quant_credits = updateConnecCreditDto.quant_credits
     }
       
-    this.conectCreditRepository.update(id, conectCredit);
-    return this.conectCreditRepository.findOne(id)
+    this.connectCreditRepository.update(id, connectCredit);
+    return this.connectCreditRepository.findOne(id)
   }
 
   async remove(id: number): Promise<void> {

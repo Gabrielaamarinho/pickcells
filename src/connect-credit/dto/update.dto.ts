@@ -1,6 +1,6 @@
 import {IsOptional, IsNumber, IsBoolean } from 'class-validator';
 
-export class UpdateConectCreditDto {
+export class UpdateConnectCreditDto {
 
 	@IsNumber()
 	@IsOptional()
