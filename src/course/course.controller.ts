@@ -31,9 +31,9 @@ export class CourseController {
     return await this.courseService.findOne(id);
   }
 
-  @Get('/relation/:id')
-  async findtodos(@Param('id') id: number): Promise<ConnectCredit[]> {
-    return await this.courseService.tableRelation(id);
+  @Get('/relation')
+  async findtodos(): Promise<ConnectCredit> {
+    return await this.courseService.tableRelation();
   }
 
   @Put('/edit/:id')

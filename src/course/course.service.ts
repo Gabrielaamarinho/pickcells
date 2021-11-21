@@ -59,12 +59,12 @@ export class CourseService {
     return this.subjectRepository.findOne( id_subject );
   }
 
-  async tableRelation(id_course: number): Promise<any>{
+  async tableRelation(): Promise<ConnectCredit> {
     return await this.connectCreditRepository
-    .createQueryBuilder('course')
-    .innerJoinAndMapOne('course.connectCredit', ConnectCredit, 'connectCredit', 'course.id = connectCredit.id_course')
-    .where('connectCredit.id_course = :id_course', {id_course})
-    .getMany();
+    .createQueryBuilder("connectCredit")
+    .select("SUM(connectCredit.isRequired)", "sum")
+    .where("connectCredit.isRequired = :isRequired", {isRequired: true})
+    .getRawOne();
   }
 
   async updateCourse(id: Course, updateCourseDto: UpdateCourseDto) {
