@@ -37,12 +37,12 @@ export class CourseController {
   }
 
   @Put('/edit/:id')
-  async updateCourse(@Param('id') id: any, @Body() updateCourseDto: UpdateCourseDto) {
+  async updateCourse(@Param('id') id: number, @Body() updateCourseDto: UpdateCourseDto) {
     return await this.courseService.updateCourse(id, updateCourseDto);
   }
 
   @Put('/edit/connectCredit/:id')
-  async updateConnectCredit(@Param('id') id: any, @Body() updateConnectCredit: UpdateConnectCreditDto) {
+  async updateConnectCredit(@Param('id') id: number, @Body() updateConnectCredit: UpdateConnectCreditDto) {
     return await this.courseService.updateConectCredit(id, updateConnectCredit);
   }
 

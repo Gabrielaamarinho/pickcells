@@ -67,24 +67,24 @@ export class CourseService {
     .getRawOne();
   }
 
-  async updateCourse(id: Course, updateCourseDto: UpdateCourseDto) {
+  async updateCourse(id: number, updateCourseDto: UpdateCourseDto) {
     const curso = updateCourseDto;
 
     this.courseRepository.update(id, curso);
     return this.courseRepository.findOne(id); //Return Object
   }
 
-  async updateConectCredit(id: Course, updateConnectCreditDto: UpdateConnectCreditDto) {
+  async updateConectCredit(id: number, updateConnectCreditDto: UpdateConnectCreditDto) {
     const connectCredit = updateConnectCreditDto;
       
     if(connectCredit.id_course) {
-      connectCredit.id_course = updateConnectCreditDto.id_course
+      connectCredit.id_course = connectCredit.id_course
     }
     if(connectCredit.id_subject) {
-      connectCredit.id_subject = updateConnectCreditDto.id_subject
+      connectCredit.id_subject = connectCredit.id_subject
     }
     if(connectCredit.quant_credits) {
-      connectCredit.quant_credits = updateConnectCreditDto.quant_credits
+      connectCredit.quant_credits = connectCredit.quant_credits
     }
       
     this.connectCreditRepository.update(id, connectCredit);
